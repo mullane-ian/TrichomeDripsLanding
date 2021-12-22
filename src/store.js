@@ -18,7 +18,7 @@ const state = {
     {
       offset: 2,
       factor: 2.0,
-      header: "Where to buy",
+      header: "Where\nto\npurchase",
       image: "images/10.jpg",
       aspect: 1,
       text:
