@@ -27,8 +27,8 @@ const state = {
     {
       offset: 3,
       factor: 2.25,
-      header: "NFT Project",
-      image: "images/2.jpg",
+      header: "NFT Membership",
+      image: "images/10.png",
       aspect: 1,
       text:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat odio architecto veritatis, iure aliquid sint fuga earum illum sunt quasi dolor expedita, possimus commodi quisquam enim dolorem eveniet nemo delectus modi vitae alias saepe! Eius tempora sunt rem. "
@@ -37,10 +37,10 @@ const state = {
       offset: 4,
       factor: 2.0,
       header: "OpenSea",
-      image: "images/1.jpg",
+      image: "images/ok.png",
       aspect: 1,
       text:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, itaque.."
+        "View the collection on OpenSea"
     },
     {
       offset: 5,

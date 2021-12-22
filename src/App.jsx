@@ -23,7 +23,7 @@ function Paragraph({ image, index, offset, factor, header, aspect, text }) {
   const alignRight = (canvasWidth - w * size - margin) / 2
   const pixelWidth = w * state.zoom * size
   const left = true
-  const color = index % 2 ? "#D40749" : "#2FE8C3"
+  const color = index % 2 ? "#803A6C" : "#C294b8"
 
   return (
     <Block factor={factor} offset={offset}>
@@ -31,7 +31,7 @@ function Paragraph({ image, index, offset, factor, header, aspect, text }) {
         <Plane position={[mobile?2:7,mobile?2.5:6,0]}map={image} args={[mobile?1:.5,mobile?1:.5, 32, 32]} shift={75} size={size} aspect={aspect} scale={[w * size, (w * size) / aspect, 1]} frustumCulled={false} />
         <Html
         className="para"
-          style={{ width: pixelWidth / (mobile ? 1 : 2), textAlign: left ? "left" : "right" }}
+          style={{ width: pixelWidth / (mobile ? 1 : 2), }}
           position={[mobile ? (-w * size) / 2 : 3.2, mobile?(-w * size) / 2 / aspect:1, 1]}>
           <div className="para" tabIndex={index}>{text}</div>
         </Html>
@@ -44,17 +44,23 @@ function Paragraph({ image, index, offset, factor, header, aspect, text }) {
           </Text>
         </Block>
     
-          <Html className={index===1?'dis':'nodis'}position={[mobile?-2:3,mobile?-3:0,0]}>
+          <Html className={index===1?'dis':'nodis'}position={[mobile?-w/1.8:1,mobile?-3:0,0]}>
             <ul className={mobile?'shops-list-m':'shops-list'} >
-              <li><a href="https://www.denalicannabis.com" target="_blank" className={mobile?'shop-item-m':'shop-item'}>DenaliCannabis</a></li>
+              <li><a href="https://www.denalicannabis.com" target="_blank" className={mobile?'shop-item-m':'shop-item'}>Denali Cannabis</a></li>
               <li><a href="https://www.tenderlovingcarecannabis.com/product-menu" target="_blank" className={mobile?'shop-item-m':'shop-item'}>TLC Cannabis</a></li>
               <li><a href="https://www.facebook.com/kottonmouth405/" target="_blank" className={mobile?'shop-item-m':'shop-item'}>Cotton Mouth</a> </li>
               <li><a href="https://www.leafly.com/dispensary-info/yur-place-dispensary" target="_blank" className={mobile?'shop-item-m':'shop-item'}>Yur Place Dispensary</a></li>
-              <li><a href="https://gazmonkeydispensary.com/" target="_blank" className={mobile?'shop-item-m':'shop-item'}>GazMonkeyDispensary</a></li>
+              <li><a href="https://gazmonkeydispensary.com/" target="_blank" className={mobile?'shop-item-m':'shop-item'}>Gaz Monkey Dispensary</a></li>
            
              
 
             </ul>
+          </Html>
+          <Html className={index===2?'dis':'nodis'}position={[mobile?-2:3.1,mobile?-1:-2,0]}>
+            <div className='nftMoreButton'>
+             <span>Learn More</span>
+            </div>
+
           </Html>
         
       </group>
@@ -75,7 +81,7 @@ function Content() {
     
       <Block factor={1} offset={0}>
 
-        <Block factor={1.2}>
+        <Block factor={1.4}>
           <Text left size={w * 0.15} position={[ mobile?-w/1.7:-w / 2.2,3.6, -1]} color="#e3ca4c">
             Trichome
           </Text>
@@ -88,22 +94,22 @@ function Content() {
         </Block>
         <Block factor={1.0}>
            <Html position={[mobile?-.5:8,mobile?-1.4:-5,0]}className="bottom-left" style={{ position: 'absolute' }} >
-           OKLAHOMA's<br /><br />PREMIER<br /><br />SOLVENTLESS<br /><br />EXTRACTS<br /><br />COMPANY
+           OKLAHOMA's<br /><br />PREMIUM<br /><br />SOLVENTLESS<br /><br />EXTRACT<br /><br />COMPANY
            <img href="/images/logo.png" />
           </Html> 
         </Block>
       </Block>
-      <Block factor={.2} offset={5.7}>
-        <MultilineText top left size={w * 0.15} lineHeight={w / 4} position={[-w / 1.5, -3.5, -1]} color="#803A6C" text={"Rosin\nHash\nDry Sift"} />
+      <Block factor={1.2} offset={7.7}>
+        <MultilineText top left size={w * 0.15} lineHeight={w / 4} position={[-w / 1.5, 0, -5]} color="#803A6C" text={"Rosin\nHash\nDry Sift"} />
       </Block>
       {state.paragraphs.map((props, index) => (
         <Paragraph key={index} index={index} {...props} image={images[index]} />
       ))}
-      {/* {state.stripes.map(({ offset, color, height }, index) => (
+      {state.stripes.map(({ offset, color, height }, index) => (
         <Block key={index} factor={-1.5} offset={offset}>
-          <Plane args={[50/10, height/10, 32, 32]} shift={-4} color={color} rotation={[0, 0, Math.PI / 8]} position={[0, 0, -10]} />
+          <Plane args={[50, height, 32, 32]} shift={-4} color={color} rotation={[0, 0, Math.PI / 8]} position={[0, 0, -10]} />
         </Block>
-      ))} */}
+      ))}
       <Block factor={1.25} offset={8}>
         <Html style={{ color: "white" }} className="bottom-left" position={[-canvasWidth / 2, -canvasHeight / 2, 0]}>
         <a href="https://www.leaflink.com/c/chron-city-distribution/" target="_blank" >
@@ -125,7 +131,7 @@ function App() {
       <Canvas linear dpr={[1, 2]} orthographic camera={{ zoom: state.zoom, position: [0, 0, 500] }}>
         <Suspense fallback={<Html center className="loading" children="Loading..." />}>
           <Content />
-          {/* <Diamonds /> */}
+         
           <Startup />
         </Suspense>
       </Canvas>

@@ -11,7 +11,7 @@
 }
 
 ::selection {
-  background: #2ddab8;
+  background: #FEFBF4;
   color: white;
 }
 
@@ -21,7 +21,7 @@ body {
   background: #0c0f13;
   overflow: hidden;
   font-family: "Sulphur Point", sans-serif;
-  color: #8b8b8b;
+  color: #FEFBF4;
   font-size: 0.9rem;
 }
 
@@ -155,24 +155,24 @@ display: none;
 
 
 .shops-list{
+  
+  white-space:nowrap;
   text-align: center;
   list-style-type: none;
-  background: rgba(159, 89, 199, 0.281);
-  padding: 40px;
-  object-fit: contain;
-  border-radius: 10%;
-  line-height: 4em;
-  z-index: 10000000000000 !important;
-  pointer-events: all;
-  
+  border: 5px solid rgb(143, 58, 192);
+
+  padding: 10px 30px;
+  font-size: 5px;
+  border-radius: 50px;
+  line-height: 100px;
+ 
 }
 .shops-list-m{
   text-align: center;
   object-fit: contain;
- 
+  white-space:nowrap;
   list-style-type: none;
-  border: 1px solid rgb(196, 172, 196);
-  /* background: rgba(143, 58, 192, 0.13); */
+  border: 5px solid rgba(143, 58, 192, 0.13);
   padding: 10px;
   width:90vw;
   border-radius: 10%;
@@ -181,24 +181,28 @@ display: none;
 }
 
 .shop-item{
+  width: 100%;
+  pointer-events: all;
+  
   font-size: 4rem;
   decoration: none; 
   text-decoration: none;
-  width: 100vw !important;
-  z-index: 10000000 !important;
+ 
+  
 
 }
 .shop-item:hover{
   cursor: crosshair;
 }
 
+
 .shop-item-m{
   pointer-events: all;
   z-index: 1000;
-  font-size: 3rem;
+  font-size: 1rem;
   decoration: none; 
   text-decoration: none;
-  width: 100vw !important;
+ 
 }
 
 .para{
@@ -206,4 +210,19 @@ display: none;
   font-size: larger;
 
 }
+
+.nftMoreButton{
+  white-space:nowrap;
+  background: linear-gradient(to right, #E3CA4C, #492E43);
+  padding: 15px 20px;
+  border-radius: 50px;
+  color: #fff;
+  pointer-events: all;
+  font-weight: 600;
+}
+
+.nftMoreButton:hover{
+  cursor:crosshair;
+}
+
 
