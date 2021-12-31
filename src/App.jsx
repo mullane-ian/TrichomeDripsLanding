@@ -5,11 +5,13 @@ import { Html, useGLTF } from "@react-three/drei"
 import { TextureLoader, LinearFilter } from "three"
 import lerp from "lerp"
 import { Text, MultilineText } from "./components/Text"
-
+import * as THREE from 'three'
 import pressImg from '/images/10.png'
 import Plane from "./components/Plane"
 import { Block, useBlock } from "./blocks"
 import state from "./store"
+import logoText from '/images/logoTexture.jpg'
+import Footer from './components/footer/Footer.jsx'
 import "./index.css"
 
 function Startup() {
@@ -39,11 +41,11 @@ function Paragraph({ image, index, offset, factor, header, aspect, text }) {
         <Text left={left} right={!left} size={w * 0.05} color={color} top position={[((-w) * size) / 1.8, (w * size) / aspect / 2 + 0.5, -1]}>
           {header}
         </Text>
-        {/* <Block factor={0.2}>
-          <Text opacity={0.5} size={w * 0.5} color="#1A1E2A" position={[(( -w) / 2) * size, (w * size) / aspect / 4, -10]}>
+        <Block factor={0.2}>
+          <Text opacity={0.5} size={w * 0.5} color="#1A1E2A" position={[mobile?-100:(( -w) / 2) * size, (w * size) / aspect / 4, -10]}>
             {"0" + (index + 1)}
           </Text>
-        </Block> */}
+        </Block>
     
           <Html className={index===1?'dis':'nodis'}position={[mobile?-w/1.8:1,mobile?-.5:0,0]}>
             <ul className={mobile?'shops-list-m':'shops-list'} >
@@ -97,14 +99,14 @@ function Content() {
 
         </Block>
         <Block factor={1.0}>
-           <Html position={[mobile?-w/2-0.25:-w/2 + 3.5,mobile?3.5:-2,0]}className="bottom-left" style={{ fontSize:mobile?'15px':'30px', position: 'absolute', whiteSpace:'nowrap' }} >
+           <Html position={[mobile?-w/2-0.25:-w/2 + 3.5,mobile?3.5:-2,0]}className="bottom-left" style={{ fontSize:mobile?'12px':'30px', position: 'absolute', whiteSpace:'nowrap' }} >
            OKLAHOMA'S PREMIUM SOLVENTLESS EXTRACT COMPANY
           
           </Html> 
         </Block>
       </Block>
       <Block factor={1.2} offset={5.5}>
-        <MultilineText top left size={w * 0.15} lineHeight={w / 4} position={[-w / 1.5, 0, -5]} color="#803A6C" text={"Rosin\nHash\nDry Sift"} />
+        <MultilineText top left size={w * 0.15} lineHeight={w / 4} position={[-w / 2, 1, -5]} color="#803A6C" text={"Rosin\nHash\nDry Sift"} />
       </Block>
       {state.paragraphs.map((props, index) => (
         <Paragraph key={index} index={index} {...props} image={images[index]} />
@@ -129,6 +131,7 @@ function Content() {
           </a>
           </div>
         </Html>
+        <Map />
       </Block>
     </>
   )
@@ -142,8 +145,8 @@ function App() {
   return (
     <>
       <Canvas linear dpr={[1, 2]} orthographic camera={{ zoom: state.zoom, position: [0, 0, 500] }}>
-      <ambientLight intensity={1.7} />
-        <Suspense fallback={<Html center className="loading" children="Loading..." />}>
+      <ambientLight color={0xbf92d1} intensity={2.} />
+        <Suspense fallback={null}>
           <Content />
          
           <Startup />
@@ -152,9 +155,12 @@ function App() {
       </Canvas>
       <div className="scrollArea" ref={scrollArea} onScroll={onScroll}>
         {new Array(state.sections).fill().map((_, index) => (
-          <div key={index} id={"0" + index} style={{ height: `${(state.pages / state.sections) * 100}vh` }} />
+          <div key={index} id={"0" + index} style={{ height: `${(state.pages / state.sections) * 84}vh` }} />
         ))}
+      <Footer />
+
       </div>
+
 
     </>
   )
@@ -169,7 +175,7 @@ function PressModel({ ...props }) {
 
   const { viewport } = useThree()
   const group = useRef()
-  const { nodes, materials } = useGLTF('/pressModel-transformed.glb')
+  const { nodes, materials } = useGLTF('/MachineGlb-transformed.glb')
  
   useFrame(({ mouse, clock }) => {
     const a = clock.getElapsedTime()
@@ -177,74 +183,135 @@ function PressModel({ ...props }) {
     group.current.rotation.y = lerp(group.current.rotation.y,Math.sin(a),0.1)
   
   })
+  let mat = new THREE.MeshBasicMaterial({color: 'white'})
+  const texture = useLoader(
+    TextureLoader, logoText
+    
+  )
+// You do not need to set `.wrapT` in this case
+  // texture.offset.x = ( 2 * Math.PI );kc
+  // let mat1 = new THREE.MeshBasicMaterial({map: texture, rotation: -10 })
 
   return (
-    <group ref={group} scale={[mobile?0.5:1,mobile?0.5:1.5,mobile?0.5:1]} rotation={[0.3,0,0]} position={[mobile?-0.5:-9,mobile?-3:-5,0]} {...props} dispose={null}>
+    <group castShadow receiveShadow ref={group} scale={[mobile?0.5:1,mobile?0.5:1,mobile?0.5:1]} rotation={[0.3,0,0]} position={[mobile?-0.5:-9,mobile?-3:-5,0]} {...props} dispose={null}>
       <pointLight position={[3, 2, 0]} />
       <pointLight position={[1, 5, 4]} />
+      
 
-      <mesh geometry={nodes.Mesh_0001.geometry} material={nodes.Mesh_0001.material} />
-      <mesh geometry={nodes.Mesh_1001.geometry} material={nodes.Mesh_1001.material} />
-      <mesh geometry={nodes.Mesh_10.geometry} material={nodes.Mesh_10.material} />
-      <mesh geometry={nodes.Mesh_11.geometry} material={nodes.Mesh_11.material} />
-      <mesh geometry={nodes.Mesh_12.geometry} material={nodes.Mesh_12.material} />
-      <mesh geometry={nodes.Mesh_13.geometry} material={nodes.Mesh_13.material} />
-      <mesh geometry={nodes.Mesh_14.geometry} material={nodes.Mesh_14.material} />
-      <mesh geometry={nodes.Mesh_15.geometry} material={nodes.Mesh_15.material} />
-      <mesh geometry={nodes.Mesh_2001.geometry} material={nodes.Mesh_2001.material} />
-      <mesh geometry={nodes.Mesh_3001.geometry} material={materials['Material_3.001']} />
-      <mesh geometry={nodes.Mesh_4.geometry} material={materials.Material_4} />
-      <mesh geometry={nodes.Mesh_5.geometry} material={nodes.Mesh_5.material} />
-      <mesh geometry={nodes.Mesh_6.geometry} material={nodes.Mesh_6.material} />
-      <mesh geometry={nodes.Mesh_7.geometry} material={nodes.Mesh_7.material} />
-      <mesh geometry={nodes.Mesh_8.geometry} material={nodes.Mesh_8.material} />
-      <mesh geometry={nodes.Mesh_9.geometry} material={nodes.Mesh_9.material} />
-      <mesh geometry={nodes.Mesh_59.geometry} material={materials.Material_14} />
-      <mesh geometry={nodes.Mesh_16.geometry} material={nodes.Mesh_16.material} />
-      <mesh geometry={nodes.Mesh_17.geometry} material={nodes.Mesh_17.material} />
-      <mesh geometry={nodes.Mesh_18.geometry} material={nodes.Mesh_18.material} />
-      <mesh geometry={nodes.Mesh_19.geometry} material={nodes.Mesh_19.material} />
-      <mesh geometry={nodes.Mesh_20.geometry} material={nodes.Mesh_20.material} />
-      <mesh geometry={nodes.Mesh_21.geometry} material={nodes.Mesh_21.material} />
-      <mesh geometry={nodes.Mesh_22.geometry} material={nodes.Mesh_22.material} />
-      <mesh geometry={nodes.Mesh_23.geometry} material={nodes.Mesh_23.material} />
-      <mesh geometry={nodes.Mesh_24.geometry} material={nodes.Mesh_24.material} />
-      <mesh geometry={nodes.Mesh_25.geometry} material={nodes.Mesh_25.material} />
-      <mesh geometry={nodes.Mesh_26.geometry} material={nodes.Mesh_26.material} />
-      <mesh geometry={nodes.Mesh_27.geometry} material={nodes.Mesh_27.material} />
-      <mesh geometry={nodes.Mesh_28.geometry} material={nodes.Mesh_28.material} />
-      <mesh geometry={nodes.Mesh_29.geometry} material={nodes.Mesh_29.material} />
-      <mesh geometry={nodes.Mesh_30.geometry} material={nodes.Mesh_30.material} />
-      <mesh geometry={nodes.Mesh_31.geometry} material={nodes.Mesh_31.material} />
-      <mesh geometry={nodes.Mesh_32.geometry} material={nodes.Mesh_32.material} />
-      <mesh geometry={nodes.Mesh_33.geometry} material={nodes.Mesh_33.material} />
-      <mesh geometry={nodes.Mesh_34.geometry} material={nodes.Mesh_34.material} />
-      <mesh geometry={nodes.Mesh_35.geometry} material={nodes.Mesh_35.material} />
-      <mesh geometry={nodes.Mesh_36.geometry} material={nodes.Mesh_36.material} />
-      <mesh geometry={nodes.Mesh_37.geometry} material={nodes.Mesh_37.material} />
-      <mesh geometry={nodes.Mesh_38.geometry} material={nodes.Mesh_38.material} />
-      <mesh geometry={nodes.Mesh_39.geometry} material={nodes.Mesh_39.material} />
-      <mesh geometry={nodes.Mesh_40.geometry} material={nodes.Mesh_40.material} />
-      <mesh geometry={nodes.Mesh_41.geometry} material={nodes.Mesh_41.material} />
-      <mesh geometry={nodes.Mesh_42.geometry} material={materials.Material_13} />
-      <mesh geometry={nodes.Mesh_43.geometry} material={nodes.Mesh_43.material} />
-      <mesh geometry={nodes.Mesh_44.geometry} material={nodes.Mesh_44.material} />
-      <mesh geometry={nodes.Mesh_45.geometry} material={nodes.Mesh_45.material} />
-      <mesh geometry={nodes.Mesh_46.geometry} material={nodes.Mesh_46.material} />
-      <mesh geometry={nodes.Mesh_47.geometry} material={nodes.Mesh_47.material} />
-      <mesh geometry={nodes.Mesh_48.geometry} material={nodes.Mesh_48.material} />
-      <mesh geometry={nodes.Mesh_49.geometry} material={nodes.Mesh_49.material} />
-      <mesh geometry={nodes.Mesh_50.geometry} material={nodes.Mesh_50.material} />
-      <mesh geometry={nodes.Mesh_51.geometry} material={nodes.Mesh_51.material} />
-      <mesh geometry={nodes.Mesh_52.geometry} material={nodes.Mesh_52.material} />
-      <mesh geometry={nodes.Mesh_53.geometry} material={nodes.Mesh_53.material} />
-      <mesh geometry={nodes.Mesh_54.geometry} material={nodes.Mesh_54.material} />
-      <mesh geometry={nodes.Mesh_55.geometry} material={nodes.Mesh_55.material} />
-      <mesh geometry={nodes.Mesh_56.geometry} material={nodes.Mesh_56.material} />
-      <mesh geometry={nodes.Mesh_57.geometry} material={nodes.Mesh_57.material} />
-      <mesh geometry={nodes.Mesh_58.geometry} material={nodes.Mesh_58.material} />
-      <mesh geometry={nodes.Mesh_60.geometry} material={nodes.Mesh_60.material} />
-      <mesh geometry={nodes.Mesh_61.geometry} material={nodes.Mesh_61.material} />
+      <mesh geometry={nodes.mesh_0.geometry} material={nodes.mesh_0.material} />
+      <mesh geometry={nodes.mesh_1.geometry} material={nodes.mesh_1.material} />
+      <mesh geometry={nodes.mesh_2.geometry} material={nodes.mesh_2.material} />
+      <mesh geometry={nodes.mesh_3.geometry} material={nodes.mesh_3.material} />
+      <mesh geometry={nodes.mesh_4.geometry} material={nodes.mesh_4.material} />
+      <mesh geometry={nodes.mesh_5.geometry} material={nodes.mesh_5.material} />
+      <mesh geometry={nodes.mesh_6.geometry} material={nodes.mesh_6.material} />
+      <mesh geometry={nodes.mesh_7.geometry} material={nodes.mesh_7.material} />
+      <mesh geometry={nodes.mesh_8.geometry} material={nodes.mesh_8.material} />
+      <mesh geometry={nodes.mesh_9.geometry} material={nodes.mesh_9.material} />
+      <mesh geometry={nodes.mesh_10.geometry} material={nodes.mesh_10.material} />
+      <mesh geometry={nodes.mesh_11.geometry} material={nodes.mesh_11.material} />
+      <mesh geometry={nodes.mesh_12.geometry} material={nodes.mesh_12.material} />
+      <mesh geometry={nodes.mesh_13.geometry} material={nodes.mesh_13.material} />
+      <mesh geometry={nodes.mesh_14.geometry} material={nodes.mesh_14.material} />
+      <mesh geometry={nodes.mesh_15.geometry} material={nodes.mesh_15.material} />
+      <mesh geometry={nodes.mesh_58.geometry} material={nodes.mesh_58.material} />
+      <mesh geometry={nodes.mesh_16.geometry} material={nodes.mesh_16.material} />
+      <mesh geometry={nodes.mesh_17.geometry} material={nodes.mesh_17.material} />
+      <mesh geometry={nodes.mesh_18.geometry} material={nodes.mesh_18.material} />
+      <mesh geometry={nodes.mesh_19.geometry} material={nodes.mesh_19.material} />
+      <mesh geometry={nodes.mesh_20.geometry} material={nodes.mesh_20.material} />
+      <mesh geometry={nodes.mesh_21.geometry} material={nodes.mesh_21.material} />
+      <mesh geometry={nodes.mesh_22.geometry} material={nodes.mesh_22.material} />
+      <mesh geometry={nodes.mesh_23.geometry} material={nodes.mesh_23.material} />
+      <mesh geometry={nodes.mesh_24.geometry} material={nodes.mesh_24.material} />
+      <mesh geometry={nodes.mesh_25.geometry} material={nodes.mesh_25.material} />
+      <mesh geometry={nodes.mesh_26.geometry} material={nodes.mesh_26.material} />
+      <mesh geometry={nodes.mesh_27.geometry} material={nodes.mesh_27.material} />
+      <mesh geometry={nodes.mesh_28.geometry} material={nodes.mesh_28.material} />
+      <mesh geometry={nodes.mesh_29.geometry} material={nodes.mesh_29.material} />
+      <mesh geometry={nodes.mesh_30.geometry} material={nodes.mesh_30.material} />
+      <mesh geometry={nodes.mesh_31.geometry} material={nodes.mesh_31.material} />
+      <mesh geometry={nodes.mesh_32.geometry} material={nodes.mesh_32.material} />
+      <mesh geometry={nodes.mesh_33.geometry} material={nodes.mesh_33.material} />
+      <mesh geometry={nodes.mesh_34.geometry} material={nodes.mesh_34.material} />
+      <mesh geometry={nodes.mesh_35.geometry} material={nodes.mesh_35.material} />
+      <mesh geometry={nodes.mesh_36.geometry} material={nodes.mesh_36.material} />
+      <mesh geometry={nodes.mesh_37.geometry} material={nodes.mesh_37.material} />
+      <mesh geometry={nodes.mesh_38.geometry} material={nodes.mesh_38.material} />
+      <mesh geometry={nodes.mesh_39.geometry} material={nodes.mesh_39.material} />
+      <mesh geometry={nodes.mesh_40.geometry} material={nodes.mesh_40.material} />
+      <mesh geometry={nodes.mesh_41.geometry} material={nodes.mesh_41.material} />
+      <mesh geometry={nodes.mesh_42.geometry} material={nodes.mesh_42.material} />
+      <mesh geometry={nodes.mesh_43.geometry} material={nodes.mesh_43.material} />
+      <mesh geometry={nodes.mesh_44.geometry} material={nodes.mesh_44.material} />
+      <mesh geometry={nodes.mesh_45.geometry} material={nodes.mesh_45.material} />
+      <mesh geometry={nodes.mesh_46.geometry} material={nodes.mesh_46.material} />
+      <mesh geometry={nodes.mesh_47.geometry} material={nodes.mesh_47.material} />
+      <mesh geometry={nodes.mesh_48.geometry} material={nodes.mesh_48.material} />
+      <mesh geometry={nodes.mesh_49.geometry} material={nodes.mesh_49.material} />
+      <mesh geometry={nodes.mesh_50.geometry} material={nodes.mesh_50.material} />
+      <mesh geometry={nodes.mesh_51.geometry} material={nodes.mesh_51.material} />
+      <mesh geometry={nodes.mesh_52_instance_0.geometry} material={nodes.mesh_52_instance_0.material} />
+      <mesh geometry={nodes.mesh_52_instance_1.geometry} material={nodes.mesh_52_instance_1.material} />
+      <mesh geometry={nodes.mesh_53.geometry} material={nodes.mesh_53.material} />
+      <mesh geometry={nodes.mesh_54.geometry} material={nodes.mesh_54.material} />
+      <mesh geometry={nodes.mesh_55.geometry} material={nodes.mesh_55.material} />
+      <mesh geometry={nodes.mesh_56.geometry} material={nodes.mesh_56.material} />
+      <mesh geometry={nodes.mesh_57.geometry} material={nodes.mesh_57.material} />
+      <mesh geometry={nodes.mesh_59.geometry} material={nodes.mesh_59.material} />
+      <mesh geometry={nodes.mesh_60.geometry} material={nodes.mesh_60.material} />
+      <mesh geometry={nodes.mesh_61.geometry} material={mat} />
+      <mesh geometry={nodes.mesh_62.geometry} material={nodes.mesh_62.material} />
+      <mesh geometry={nodes.mesh_63.geometry} material={mat} />
+      <mesh geometry={nodes.mesh_64.geometry} material={nodes.mesh_64.material} />
     </group>
   )
 }
+
+function Map({ ...props }) {
+  const group = useRef()
+  const {mobile } = useBlock()
+
+
+  const { nodes, materials } = useGLTF('/trickhomeMap-transformed.glb')
+  const texture = useLoader(
+    TextureLoader, logoText
+    
+  )
+  
+  let mat = new THREE.MeshBasicMaterial({map: texture })
+  let mat1 = new THREE.MeshBasicMaterial({color: 'white' })
+
+
+  useFrame(({  clock }) => {
+    const a = clock.getElapsedTime()
+    // group.current.rotation.y = Math.cos(a) + 1
+    group.current.rotation.x = lerp(group.current.rotation.x,Math.sin(a ) * 0.05 - 0.15,0.1)
+    group.current.rotation.z = lerp(group.current.rotation.z,Math.sin(a ) * 0.025,0.1)
+  
+  })
+
+  return (
+    <group ref={group} scale={[mobile?0.35:2,mobile?0.35:2,mobile?0.35:2]} position={[0,mobile?-65:-100,-200]} {...props} dispose={null}>
+      <ambientLight />
+      <mesh geometry={nodes.mesh_0.geometry} material={nodes.mesh_0.material} />
+      <mesh geometry={nodes.mesh_1.geometry} material={nodes.mesh_1.material} />
+      <mesh geometry={nodes.mesh_2.geometry} material={nodes.mesh_2.material} />
+     
+     
+      {/* Main letter Fronts */}
+      <mesh geometry={nodes.mesh_3.geometry}  material={mat1} />
+      
+      {/* Main letter backs */}
+      <mesh geometry={nodes.mesh_4.geometry} material={nodes.mesh_4.material} />
+
+      {/* O AND C FRONTS*/}
+
+      <mesh geometry={nodes.mesh_5.geometry} material={mat1} />
+
+      {/* O AND C BACKS*/}
+      <mesh geometry={nodes.mesh_6.geometry} material={nodes.mesh_6.material} />
+    </group>
+  )
+}
+

@@ -8,7 +8,7 @@ const state = {
   paragraphs: [
     {
       offset: 1,
-      factor: 1.75,
+      factor: 2,
       header: "Products",
       image: "images/5.jpg",
       aspect: 1,
