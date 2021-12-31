@@ -14,20 +14,27 @@ import logoText from '/images/logoTexture.jpg'
 import Footer from './components/footer/Footer.jsx'
 import "./index.css"
 
-function Startup() {
+function Startup({...props}) {
+
+  
+  
   const ref = useRef()
+  const { size, viewport } = useThree();
+
+  let mobile = size.width <= 1024;
+
+  props.func(mobile);
    useFrame(() => (ref.current.material.opacity = lerp(ref.current.material.opacity, 0, 0.025)))
   return <Plane ref={ref} color="#E3CA4C" position={[0, 0, 200]} scale={[100, 100, 1]} />
 }
 
-function Paragraph({ image, index, offset, factor, header, aspect, text }) {
+function Paragraph({ image, index, offset, factor, header, aspect, text}) {
   const { contentMaxWidth: w, canvasWidth, margin, mobile } = useBlock()
   const size = aspect < 1 && !mobile ? 0.65 : 1
   const alignRight = (canvasWidth - w * size - margin) / 2
   const pixelWidth = w * state.zoom * size
   const left = true
   const color = index % 2 ? "#803A6C" : "#C294b8"
-
   return (
     <Block factor={factor} offset={offset}>
       <group position={[left ? -alignRight : alignRight, mobile?2:0, 0]}>
@@ -71,7 +78,7 @@ function Paragraph({ image, index, offset, factor, header, aspect, text }) {
   )
 }
 
-function Content() {
+function Content({...props}) {
   const images = useLoader(
     TextureLoader,
     state.paragraphs.map(({ image }) => image)
@@ -79,6 +86,7 @@ function Content() {
   const press = useLoader(TextureLoader,pressImg)
    useMemo(() => images.forEach((texture) => (texture.minFilter = LinearFilter)), [images])
   const { contentMaxWidth: w, canvasWidth, canvasHeight, mobile } = useBlock()
+
   return (
     <>
     
@@ -99,7 +107,7 @@ function Content() {
 
         </Block>
         <Block factor={1.0}>
-           <Html position={[mobile?-w/2-0.25:-w/2 + 3.5,mobile?3.5:-2,0]}className="bottom-left" style={{ fontSize:mobile?'12px':'30px', position: 'absolute', whiteSpace:'nowrap' }} >
+           <Html position={[mobile?-w/2-0.25:-w/2 + 3.5,mobile?3.5:-2,0]}className="bottom-left" style={{ fontSize:mobile?'15px':'30px', position: 'absolute', whiteSpace:'nowrap' }} >
            OKLAHOMA'S PREMIUM SOLVENTLESS EXTRACT COMPANY
           
           </Html> 
@@ -140,8 +148,26 @@ function Content() {
 function App() {
 
   const scrollArea = useRef()
-  const onScroll = (e) => (state.top.current = e.target.scrollTop)
-  useEffect(() => void onScroll({ target: scrollArea.current }), [])
+  const onScroll = (e) => {
+   
+    state.top.current = e.target.scrollTop
+  
+  }
+  useEffect(() => void onScroll({ target: scrollArea.current
+  
+  }), [])
+  
+ let shouldMobile = true
+  const pull_data = (data) => {
+    shouldMobile = data; // LOGS DATA FROM CHILD (My name is Dean Winchester... &)
+  
+  };
+
+
+  console.log(shouldMobile)
+
+
+
   return (
     <>
       <Canvas linear dpr={[1, 2]} orthographic camera={{ zoom: state.zoom, position: [0, 0, 500] }}>
@@ -149,13 +175,13 @@ function App() {
         <Suspense fallback={null}>
           <Content />
          
-          <Startup />
+          <Startup func={pull_data}/>
         </Suspense>
      
       </Canvas>
-      <div className="scrollArea" ref={scrollArea} onScroll={onScroll}>
+      <div className="scrollArea" ref={scrollArea} onScroll={onScroll} >
         {new Array(state.sections).fill().map((_, index) => (
-          <div key={index} id={"0" + index} style={{ height: `${(state.pages / state.sections) * 84}vh` }} />
+          <div   key={index} id={"0" + index} style={{ height: `${(state.pages / state.sections) * (shouldMobile?73.5:84)}vh` }} />
         ))}
       <Footer />
 
@@ -292,7 +318,7 @@ function Map({ ...props }) {
   })
 
   return (
-    <group ref={group} scale={[mobile?0.35:2,mobile?0.35:2,mobile?0.35:2]} position={[0,mobile?-65:-100,-200]} {...props} dispose={null}>
+    <group ref={group} scale={[mobile?0.55:2,mobile?0.55:2,mobile?0.55:2]} position={[0,mobile?-65:-100,-200]} {...props} dispose={null}>
       <ambientLight />
       <mesh geometry={nodes.mesh_0.geometry} material={nodes.mesh_0.material} />
       <mesh geometry={nodes.mesh_1.geometry} material={nodes.mesh_1.material} />
