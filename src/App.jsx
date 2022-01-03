@@ -58,7 +58,7 @@ function Paragraph({ image, index, offset, factor, header, aspect, text}) {
             <ul className={mobile?'shops-list-m':'shops-list'} >
               <li><a href="https://www.denalicannabis.com" target="_blank" className={mobile?'shop-item-m':'shop-item'}>Denali Cannabis</a></li>
               <li><a href="https://www.tenderlovingcarecannabis.com/product-menu" target="_blank" className={mobile?'shop-item-m':'shop-item'}>TLC Cannabis</a></li>
-              <li><a href="https://www.facebook.com/kottonmouth405/" target="_blank" className={mobile?'shop-item-m':'shop-item'}>Cotton Mouth</a> </li>
+              <li><a href="https://www.facebook.com/kottonmouth405/" target="_blank" className={mobile?'shop-item-m':'shop-item'}>Kotton Mouth</a> </li>
               <li><a href="https://www.leafly.com/dispensary-info/yur-place-dispensary" target="_blank" className={mobile?'shop-item-m':'shop-item'}>Yur Place Dispensary</a></li>
               <li><a href="https://gazmonkeydispensary.com/" target="_blank" className={mobile?'shop-item-m':'shop-item'}>Gaz Monkey Dispensary</a></li>
            
