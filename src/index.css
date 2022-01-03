@@ -4,10 +4,12 @@
 *::after,
 *::before {
   box-sizing: border-box;
+  
 }
 
 :root {
   font-size: 20px;
+  
 }
 
 ::selection {
@@ -55,7 +57,7 @@ a:hover {
   left: 0;
   width: 100vw;
   height: 100vh;
-  overflow: auto;
+  overflow-y: auto;
 }
 
 .frame {

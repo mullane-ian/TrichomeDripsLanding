@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom"
 import React, { Suspense, useEffect, useRef, useMemo } from "react"
 import { Canvas, useLoader, useThree, useFrame } from "@react-three/fiber"
-import { Html, useGLTF } from "@react-three/drei"
+import { Html, useGLTF,useProgress } from "@react-three/drei"
 import { TextureLoader, LinearFilter } from "three"
 import lerp from "lerp"
 import { Text, MultilineText } from "./components/Text"
@@ -107,7 +107,7 @@ function Content({...props}) {
 
         </Block>
         <Block factor={1.0}>
-           <Html position={[mobile?-w/2-0.25:-w/2 + 3.5,mobile?3.5:-2,0]}className="bottom-left" style={{ fontSize:mobile?'15px':'30px', position: 'absolute', whiteSpace:'nowrap' }} >
+           <Html center position={[mobile?-w/2-0.25:-w/2 + 3.5,mobile?3.5:-2,0]}className="bottom-left" style={{ fontSize:mobile?'15px':'30px', position: 'absolute', whiteSpace:'nowrap' }} >
            OKLAHOMA'S PREMIUM SOLVENTLESS EXTRACT COMPANY
           
           </Html> 
@@ -139,7 +139,7 @@ function Content({...props}) {
           </a>
           </div>
         </Html>
-        <Map />
+        {/* <Map /> */}
       </Block>
     </>
   )
@@ -172,7 +172,7 @@ function App() {
     <>
       <Canvas linear dpr={[1, 2]} orthographic camera={{ zoom: state.zoom, position: [0, 0, 500] }}>
       <ambientLight color={0xbf92d1} intensity={2.} />
-        <Suspense fallback={null}>
+        <Suspense fallback={<Loader />}>
           <Content />
          
           <Startup func={pull_data}/>
@@ -194,6 +194,11 @@ function App() {
 
 
 export default App
+
+function Loader() {
+  const { active, progress, errors, item, loaded, total } = useProgress()
+  return <Html center> Loading...</Html>
+}
 
 
 function PressModel({ ...props }) {
@@ -219,7 +224,7 @@ function PressModel({ ...props }) {
   // let mat1 = new THREE.MeshBasicMaterial({map: texture, rotation: -10 })
 
   return (
-    <group castShadow receiveShadow ref={group} scale={[mobile?0.5:1,mobile?0.5:1,mobile?0.5:1]} rotation={[0.3,0,0]} position={[mobile?-0.5:-9,mobile?-3:-5,0]} {...props} dispose={null}>
+    <group   ref={group} scale={[mobile?0.5:1,mobile?0.5:1,mobile?0.5:1]} rotation={[0.3,0,0]} position={[mobile?-0.5:-9,mobile?-3:-5,0]} {...props} dispose={null}>
       <pointLight position={[3, 2, 0]} />
       <pointLight position={[1, 5, 4]} />
       
