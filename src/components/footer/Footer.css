@@ -1,13 +1,18 @@
 .footer {
-    display: inline-block;
+  
     width: 100vw;
+ 
     display: flex;
     flex-direction: column;
-
-    bottom: 0;
-    font-weight: bold;
-    z-index: 10000;
+    
   
+    font-weight: bold;
+   
+  
+  }
+  .footer:hover{
+    background: #803a6c;
+    color: white;
   }
   
   .footer-social-media {
@@ -62,7 +67,6 @@
     flex-grow: 1;
     border: none;
     height: 1px;
-    background-color: black;
     width: 100%;
   }
   

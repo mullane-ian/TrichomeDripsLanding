@@ -1,0 +1,40 @@
+.navigation{
+
+    height: 50px;
+    position: absolute;
+   
+}
+.navbar{
+  height: 50px;
+  z-index: 100000000000000000000000000000000000000000 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 5px solid #492e43;
+  border-radius: 50%;
+  width: 100vw;
+
+}
+.navigation:hover{
+    cursor: crosshair;
+}
+
+
+
+
+
+nav {
+    height:130px;
+  }
+  .navbar-nav {
+    margin:auto;
+  }
+  .nav-link {
+    margin:10px 25px;
+    color:#000;
+  }
+  .nav-link:hover {
+    color:#e3ca4c;
+    background: #492e43;
+    border-radius: 10px;
+  }

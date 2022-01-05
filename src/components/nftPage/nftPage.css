@@ -1,0 +1,57 @@
+.canvas-holder{
+    height: 50vh;
+    border: 10px solid #803A6C !important;
+    border-radius: 50px;
+}
+
+
+.nftPage {
+    pointer-events: all;
+    overflow: auto;
+    height: 100vh;
+}
+
+.metamask-logo{
+  
+}
+
+
+.metamask-holder{
+    height: 50vh;
+    border: 10px solid #e3ca4c !important;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.metamask-holder > a >img {
+    max-width: 60vw;
+    max-height: 60vh;
+}
+.metamask-holder > a >img:hover {
+    background: #803A6C;
+}
+.opensea-holder > a >img:hover {
+    background: #e3ca4c;
+}
+
+.metamask-holder:hover {
+    background: #803A6C;
+}
+.opensea-holder:hover {
+    background: #e3ca4c;
+}
+
+
+.opensea-holder{
+    height: 50vh;
+    border: 10px solid #803A6C !important;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.opensea-holder > a >img {
+    max-width: 60vw;
+    max-height: 60vh;
+}
